@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, PasswordField, EmailField, DateField
-from wtforms.validators import DataRequired, Length, EqualTo, Email
+from wtforms import StringField, TextAreaField, PasswordField, DateField
+from wtforms.validators import DataRequired, Length, EqualTo
 
 
 # 내용이 올바르게 입력됐는지 체크하는 것
@@ -22,6 +22,7 @@ class UserCreateForm(FlaskForm):
 
 class UserLoginForm(FlaskForm):
     userid = StringField("아이디", validators=[DataRequired(), Length(min=1, max=25)])
+    # username = StringField("사용자이름", validators=[DataRequired(), Length(min=3, max=25)])
     password = PasswordField("비밀번호", validators=[DataRequired()])
 
 

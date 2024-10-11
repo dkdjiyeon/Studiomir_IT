@@ -4,7 +4,7 @@ from werkzeug.utils import redirect
 bp = Blueprint("main", __name__, url_prefix="/")
 
 
-# 기본 페이지
+# 일정표
 @bp.route("/")
 def board_page():
     return redirect(url_for("schedule._list"))
@@ -22,7 +22,7 @@ def person_page():
     return redirect(url_for("person._list"))
 
 
-# 만든이 페이지
-@bp.route("/creator")
-def about_page():
-    return redirect(url_for("creator._list"))
+# 게시판
+@bp.route("/question/list")
+def question_page():
+    return redirect(url_for("question._list"))

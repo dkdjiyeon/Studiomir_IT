@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <form method="get">
+    <div class="mb-3">
+      <label for="person">사용자 검색</label>
+      <input type="text" class="form-control" name="person" id="person" />
+    </div>
+    <button type="submit" class="btn btn-primary">찾기</button>
+  </form>
+</div>
+
+<div class="container">
+  <div class="row">
+    <h3 class="my-3 border-bottom pb-2">아이템 리스트</h3>
+
+    <table>
+      <tr>
+        <th>장비종류</th>
+        <th>장비명</th>
+      </tr>
+
+      <tr>
+        <td>CPU</td>
+        <td>i7 9800</td>
+      </tr>
+      <tr>
+        <td>그래픽카드</td>
+        <td>이엠텍 4080</td>
+      </tr>
+      <tr>
+        <td>메모리</td>
+        <td>삼성 16기가</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

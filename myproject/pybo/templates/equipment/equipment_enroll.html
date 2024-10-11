@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <h5 class="my-3 border-bottom pb-2">전산장비 등록</h5>
+
+  <form action="{{ url_for('equipment.enroll_complete') }}" method="post">
+    {{ form.csrf_token }}
+
+    <!-- 오류표시 Start -->
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for field, errors in form.errors.items() %}
+      <strong>{{ form[field].label }}</strong>
+      <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <!-- 오류표시 End -->
+
+    <div class="mb-3">
+      <label for="kind">종류</label>
+      <input
+        type="text"
+        class="form-control"
+        name="kind"
+        id="kind"
+        value="{{ form.kind.data or '' }}"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="product_name">제품명</label>
+      <input
+        type="text"
+        class="form-control"
+        name="product_name"
+        id="product_name"
+        value="{{ form.product_name.data or '' }}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="person">사용자</label>
+      <input type="text" class="form-control" name="person" id="person" />
+    </div>
+    <div class="mb-3">
+      <label for="note">비고</label>
+      <input type="text" class="form-control" name="note" id="note" />
+    </div>
+
+    <div class="mb-3">
+      <label for="buy_date">구매일:</label>
+      <input
+        type="date"
+        class="form-control"
+        name="buy_date"
+        id="buy_date"
+        value="{{ form.buy_date.data or '' }}"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="enroll_date">등록일:</label>
+      <input
+        type="date"
+        class="form-control"
+        name="enroll_date"
+        id="enroll_date"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">등록</button>
+  </form>
+</div>
+
+{% endblock %}

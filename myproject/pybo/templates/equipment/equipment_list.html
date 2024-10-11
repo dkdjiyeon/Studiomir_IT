@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+    <h5>전산장비 등록/추가</h5>
+    {% if g.user %}
+        {% if g.level == "admin" %}
+        <form method="get">
+            <a href="{{ url_for('equipment.enroll') }}" class="btn btn-primary">등록하기</a>
+            <a href="{{ url_for('equipment.add') }}" class="btn btn-primary">목록추가</a>
+        </form>
+        {% else %}
+        {% endif%}
+    {% endif%}
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- 3:7 비율의 첫 번째 열 (3) -->
+        <div class="col-3 bg-light">
+            <h3 class="my-3 border-bottom pb-2">전산장비 목록</h3>
+            <!--      <h3 class="my-3 border-bottom pb-2">item_list.items </h3>-->
+            <ul>
+                {% for item in item_list %}
+                <li><a href="#">{{ item.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- 3:7 비율의 두 번째 열 (9) -->
+        <div class="col-9 bg-light">
+            <h3 class="my-3 border-bottom pb-2">아이템 리스트</h3>
+
+            <table>
+                <tr>
+                    <th>제품명</th>
+                    <th>사용자</th>
+                    <th>구매일</th>
+                    <th>등록일</th>
+                    <th>비고</th>
+                </tr>
+                {% for i in range(100) %}
+                <tr>
+                    <td><a href="#">{{loop.index}}번째 아이템명</a></td>
+                    <td>{{loop.index}}번째 사용자명</td>
+                    <td>{{loop.index}}번째 구매일</td>
+                    <td>{{loop.index}}번째 등록일</td>
+                    <td>{{loop.index}}번째 비고</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

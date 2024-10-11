@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('schedule._list') }}">전산팀</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarColor03"
+                aria-controls="navbarColor03"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('schedule._list') }}">일정표</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('equipment._list') }}">전산장비</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('person._list') }}">개인장비</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('question._list') }}">게시판</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <!--                관리자일 경우에만 계정생성 탭이 보이도록-->
+                    {% if g.user %}
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}"
+                            >{{ g.user.username }} (로그아웃)</a>
+                        </li>
+                    </ul>
+                    {% else %}
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.signup') }}">계정생성</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a>
+                        </li>
+                    </ul>
+                    {% endif %}
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -21,6 +21,7 @@ class User(db.Model):
     userid = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     username = db.Column(db.String(150), nullable=False)
+    level = db.Column(db.String(100))
 
 
 class Question(db.Model):

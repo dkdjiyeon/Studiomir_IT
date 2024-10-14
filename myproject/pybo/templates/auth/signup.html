@@ -45,6 +45,17 @@
       />
     </div>
 
+     <div class="mb-3">
+      <label for="level" style="display: none;">레벨</label>
+      <input
+        type="hidden"
+        class="form-control"
+        name="level"
+        id="level"
+        value="{{ form.level.data or '0' }}"
+      />
+    </div>
+
     <button type="submit" class="btn btn-primary">생성하기</button>
   </form>
 </div>

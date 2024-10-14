@@ -23,6 +23,7 @@ def signup():
                 username=form.username.data,
                 password=generate_password_hash(form.password1.data),
                 userid=form.userid.data,
+                level= form.level.data
             )
             db.session.add(user)
             db.session.commit()

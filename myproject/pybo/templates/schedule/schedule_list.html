@@ -1,7 +1,36 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
 
-
-<h3>스케줄 화면 개발중...</h3>
-
-
+{% block content %}
+    <div id="calendar"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',  // 월별 보기
+                editable: true,  // 일정 수정 가능 여부
+                events: '/schedule/events',  // 서버에서 일정을 가져올 URL
+                dateClick: function(info) {
+                    var title = prompt('일정 제목을 입력하세요:');
+                    if (title) {
+                        fetch('/schedule/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                title: title,
+                                start: info.dateStr
+                            })
+                        }).then(response => {
+                            if (response.ok) {
+                                alert('일정이 추가되었습니다!');
+                                calendar.refetchEvents();  // 일정을 새로고침
+                            }
+                        });
+                    }
+                }
+            });
+            calendar.render();
+        });
+    </script>
 {% endblock %}

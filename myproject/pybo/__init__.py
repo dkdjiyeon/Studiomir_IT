@@ -35,6 +35,9 @@ def create_app():
         auth_views,
         equipment_views,
         person_views,
+        license_views,
+        ip_views,
+        admin_views,
     )
 
     # 블루프린트
@@ -45,6 +48,9 @@ def create_app():
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(equipment_views.bp)
     app.register_blueprint(person_views.bp)
+    app.register_blueprint(license_views.bp)
+    app.register_blueprint(ip_views.bp)
+    app.register_blueprint(admin_views.bp)
 
     # 필터
     from .filter import formate_datetime

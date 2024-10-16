@@ -1,4 +1,7 @@
 from pybo import db
+from enum import Enum
+from sqlalchemy import Enum as SQLAEnum
+from flask_sqlalchemy import SQLAlchemy
 
 # 데이터 베이스에 저장될 항목들
 
@@ -15,13 +18,17 @@ answer_voter = db.Table("answer_voter",
                         db.Column("answer_id", db.Integer, db.ForeignKey("answer.id", ondelete="CASCADE"),
                                   primary_key=True, ), )
 
+class UserLevelEnum(Enum):
+    basic = "basic"
+    read = "read"
+    admin = "admin"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userid = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     username = db.Column(db.String(150), nullable=False)
-    level = db.Column(db.String(100))
+    level = db.Column(SQLAEnum(UserLevelEnum), default=UserLevelEnum.basic)
 
 
 class Question(db.Model):
@@ -60,3 +67,10 @@ class Equipment(db.Model):
 class EquipmentList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+
+
+class Schedule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=True)

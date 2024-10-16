@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('schedule._list') }}">전산팀</a>
+        <a class="navbar-brand" href="{{ url_for('schedule.events') }}">전산팀</a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -15,18 +15,28 @@
         <div class="collapse navbar-collapse" id="navbarColor03">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('schedule._list') }}">일정표</a>
+                    <a class="nav-link" href="{{ url_for('person._list') }}">개인장비</a>
+                </li>
+                {% if g.user and (g.user.level.value == 'admin') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('schedule.events') }}">일정표</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('equipment._list') }}">전산장비</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('person._list') }}">개인장비</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('question._list') }}">게시판</a>
                 </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="{{ url_for('license._list') }}">라이센스</a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="{{ url_for('ip._list') }}">IP</a>
+                </li>
+                <li class="nav-item">
+                    <a  class="nav-link" href="{{ url_for('admin._list') }}">관리자 메뉴</a>
+                </li>
+                {% endif %}
 
 
                 <li class="nav-item">
@@ -42,9 +52,7 @@
                     {% else %}
 
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('auth.signup') }}">계정생성</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('auth.login') }}">로그인</a>
                         </li>

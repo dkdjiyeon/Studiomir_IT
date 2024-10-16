@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, PasswordField, DateField
-from wtforms.validators import DataRequired, Length, EqualTo, Regexp
+from wtforms import StringField, TextAreaField, PasswordField, DateField, SubmitField
+from wtforms.validators import DataRequired, Length, EqualTo, Regexp, Optional
 
 
 # 내용이 올바르게 입력됐는지 체크하는 것
@@ -30,6 +30,27 @@ class UserCreateForm(FlaskForm):
 
     password2 = PasswordField("비밀번호확인", validators=[DataRequired()])
     level = StringField("레벨", validators=[DataRequired(), Length(min=1, max=25)])
+
+class PasswordForm(FlaskForm):
+    password1 = PasswordField(
+        '새 비밀번호',
+        validators=[
+            Optional(),  # 선택적 입력 허용
+            Length(min=8, message="비밀번호는 최소 8자 이상이어야 합니다."),
+            Regexp(
+                r'^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])',
+                message="비밀번호는 소문자, 숫자, 특수문자를 포함해야 합니다."
+            )
+        ]
+    )
+    password2 = PasswordField(
+        '비밀번호 확인',
+        validators=[
+            Optional(),  # 선택적 입력 허용
+            EqualTo('password1', message="비밀번호가 일치하지 않습니다.")
+        ]
+    )
+    submit = SubmitField('정보 변경')
 
 
 class UserLoginForm(FlaskForm):

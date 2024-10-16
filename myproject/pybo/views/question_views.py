@@ -4,12 +4,13 @@ from werkzeug.utils import redirect
 from pybo import db
 from pybo.models import Question, Answer, User
 from pybo.forms import QuestionForm, AnswerForm
-from pybo.views.auth_views import login_required
+from pybo.views.main_views import permission_required
 
 bp = Blueprint("question", __name__, url_prefix="/question")
 
 
 @bp.route("/list/")
+@permission_required(['admin'])
 def _list():
     page = request.args.get("page", type=int, default=1)
     kw = request.args.get("kw", type=str, default="")
@@ -38,6 +39,7 @@ def _list():
 
 
 @bp.route("/detail/<int:question_id>/")
+@permission_required(['admin'])
 def detail(question_id):
     form = AnswerForm()
     question = Question.query.get_or_404(question_id)
@@ -45,7 +47,7 @@ def detail(question_id):
 
 
 @bp.route("/create/", methods=("GET", "POST"))
-@login_required
+@permission_required(['admin'])
 def create():
     form = QuestionForm()
     if request.method == "POST" and form.validate_on_submit():
@@ -61,7 +63,7 @@ def create():
 
 
 @bp.route("/modify/<int:question_id>", methods=("GET", "POST"))
-@login_required
+@permission_required(['admin'])
 def modify(question_id):
     question = Question.query.get_or_404(question_id)
     if g.user != question.user:
@@ -80,7 +82,7 @@ def modify(question_id):
 
 
 @bp.route("/delete/<int:question_id>")
-@login_required
+@permission_required(['admin'])
 def delete(question_id):
     question = Question.query.get_or_404(question_id)
     if g.user != question.user:
@@ -92,7 +94,7 @@ def delete(question_id):
 
 
 @bp.route("/vote/<int:question_id>/")
-@login_required
+@permission_required(['admin'])
 def vote(question_id):
     _question = Question.query.get_or_404(question_id)
     if g.user == _question.user:

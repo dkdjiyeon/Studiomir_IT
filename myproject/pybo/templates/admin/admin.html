@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 style="text-align: center; margin-top: 50px;">관리자 화면 - 사용자 정보 변경</h3>
+
+<form method="POST" action="{{ url_for('admin._list') }}" style="max-width: 500px; margin: auto; margin-top: 20px;">
+    {{ password_form.hidden_tag() }}
+
+    <!-- 사용자 선택 -->
+    <div class="form-group mb-3">
+        <label for="user_id" class="form-label">사용자 선택:</label>
+        <select class="form-control" name="user_id" id="user_id">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }} (현재 레벨: {{ user.level.value }})</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- 레벨 선택 -->
+    <div class="form-group mb-3">
+        <label for="level" class="form-label">새로운 레벨:</label>
+        <select class="form-control" name="level" id="level">
+            <option value="basic">Basic</option>
+            <option value="read">Read</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+
+    <!-- 비밀번호 입력 -->
+    <div class="form-group mb-3">
+        {{ password_form.password1.label(class="form-label") }}
+        {{ password_form.password1(class="form-control", placeholder="새 비밀번호 입력") }}
+        {% if password_form.password1.errors %}
+            <div class="text-danger mt-2">
+                {{ password_form.password1.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- 비밀번호 확인 -->
+    <div class="form-group mb-3">
+        {{ password_form.password2.label(class="form-label") }}
+        {{ password_form.password2(class="form-control", placeholder="비밀번호 확인") }}
+        {% if password_form.password2.errors %}
+            <div class="text-danger mt-2">
+                {{ password_form.password2.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">정보 변경</button>
+</form>
+
+{% endblock %}

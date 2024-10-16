@@ -6,13 +6,13 @@ from werkzeug.utils import redirect
 from pybo import db
 from pybo.forms import AnswerForm
 from pybo.models import Question, Answer
-from .auth_views import login_required
+from pybo.views.main_views import permission_required
 
 bp = Blueprint("answer", __name__, url_prefix="/answer")
 
 
 @bp.route("/create/<int:question_id>", methods=("POST",))
-@login_required
+@permission_required(['admin'])
 def create(question_id):
     form = AnswerForm()
 
@@ -34,7 +34,7 @@ def create(question_id):
 
 
 @bp.route("/modify/<int:answer_id>", methods=("GET", "POST"))
-@login_required
+@permission_required(['admin'])
 def modify(answer_id):
     answer = Answer.query.get_or_404(answer_id)
     if g.user != answer.user:
@@ -58,7 +58,7 @@ def modify(answer_id):
 
 
 @bp.route("/delete/<int:answer_id>")
-@login_required
+@permission_required(['admin'])
 def delete(answer_id):
     answer = Answer.query.get_or_404(answer_id)
     question_id = answer.question.id
@@ -71,7 +71,7 @@ def delete(answer_id):
 
 
 @bp.route("/vote/<int:answer_id>/")
-@login_required
+@permission_required(['admin'])
 def vote(answer_id):
     _answer = Answer.query.get_or_404(answer_id)
     if g.user == _answer.user:
